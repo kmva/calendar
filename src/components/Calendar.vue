@@ -1,29 +1,30 @@
 <template>
     <div class="calendar">
+        <h1>
+            <div class="arrow left" @click="prevMonth"></div>
+                {{month}}
+            <div class="arrow right" @click="nextMonth"></div>
+            <span v-if="showYear" class="year">{{year}}г.</span>
+        </h1>
 
-            <h1>
-                <div class="arrow left" @click="prevMonth"></div>
-                    {{month}}
-                <div class="arrow right" @click="nextMonth"></div>
-                <span v-if="showYear" class="year">{{year}}г.</span>
-            </h1>
+        <div class="weekdays">
+            <div class="weekday">Понедельник</div>
+            <div class="weekday">Вторник</div>
+            <div class="weekday">Среда</div>
+            <div class="weekday">Четверг</div>
+            <div class="weekday">Пятница</div>
+            <div class="weekday">Суббота</div>
+            <div class="weekday">Воскресенье</div>  
+        </div>
 
-            <div class="weekdays">
-                <div class="weekday">Понедельник</div>
-                <div class="weekday">Вторник</div>
-                <div class="weekday">Среда</div>
-                <div class="weekday">Четверг</div>
-                <div class="weekday">Пятница</div>
-                <div class="weekday">Суббота</div>
-                <div class="weekday">Воскресенье</div>  
-            </div>
         <div class="calendar-wrapper">
             <div class="cell"></div>
             <Cell 
                 v-for="i in moment(date).daysInMonth()" 
                 :key="i" 
                 :date="moment(year + moment(date).format('MM') + i, 'YYYYMMD').format()"
-            />
+                :events="events.filter(event => moment(event.date).format('MM DD YYYY') == moment(year + moment(date).format('MM') + i, 'YYYYMMD').format('MM DD YYYY'))"
+            /> 
         </div>
     </div>
 </template>

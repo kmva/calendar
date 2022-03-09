@@ -5,23 +5,36 @@
         'cell--weekend': isWeekend,
         'cell--today': isToday, 
         }">
-        {{moment(date).format('D')}}
+        <div class="date">{{moment(date).format('D')}}</div>
+        <div v-if="events" class="events">
+            <Event 
+                v-for="event in events" 
+                :event="event"
+                :key="event.id"
+            />
+        </div>
   </div>
 </template>
 
 <script>
 import { computed } from 'vue'
 
+import Event from './Event'
+
 import moment from 'moment'
 
 export default {
+    components: { Event },
     props: {
         date: {
             type: String,
             required: true,
         },
+        events: {
+            type: Array,
+            required: false,
+        }
     },
-
     setup(props) {
         const isToday = computed(() => {
             return moment(props.date).format("YYYYMMDD") == moment().format("YYYYMMDD");
@@ -48,12 +61,16 @@ export default {
 
 <style>
     .cell{
+        min-width: 0;
         padding: 1em;
         background: #FFF;
         border: 1px solid #EEE;
         border-radius: 10px;
         font-weight: bold;
         font-size: 20px;
+    }
+
+    .date{
         display: flex;
         align-items: flex-start;
         justify-content: flex-end;
@@ -71,5 +88,9 @@ export default {
     .cell--today{
         color: green;
         border-color: #CCC;
+    }
+
+    .events{
+        text-align: left;
     }
 </style>
