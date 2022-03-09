@@ -44,6 +44,7 @@ export default {
         position: relative;
         z-index: 1000;
         max-width: initial;
+        cursor: pointer;
     }
 
     .red{

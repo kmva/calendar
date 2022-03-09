@@ -93,4 +93,11 @@ export default {
     .events{
         text-align: left;
     }
+
+    @media screen and (max-width: 500px){
+        .cell{
+            padding: .5em;
+            font-size: 16px;
+        }
+    }
 </style>
